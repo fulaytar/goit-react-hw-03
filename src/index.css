@@ -4,9 +4,12 @@
   margin: 0;
   font-family: sans-serif;
 }
-body{
+body {
   padding: 2rem;
 }
-ul{
+ul {
   list-style-type: none;
+}
+h1 {
+  margin-bottom: 20px;
 }
