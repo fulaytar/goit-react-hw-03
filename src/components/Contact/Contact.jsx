@@ -1,19 +1,17 @@
 import css from "./Contact.module.css";
 import { IoPerson } from "react-icons/io5";
 import { BsFillTelephoneFill } from "react-icons/bs";
-import { nanoid } from "nanoid";
 
-export default function Contact({ info, onDelete }) {
-  const id = nanoid();
+export default function Contact({ id, name, number, onDelete }) {
   return (
-    <div id={id} className={css.container}>
+    <div key={id} className={css.container}>
       <h3>
-        <IoPerson /> {info.name}
+        <IoPerson /> {name}
       </h3>
       <p>
-        <BsFillTelephoneFill /> {info.number}
+        <BsFillTelephoneFill /> {number}
       </p>
-      <button className={css.btn} onClick={() => onDelete(info.id)}>
+      <button className={css.btn} onClick={() => onDelete(id)}>
         Delete
       </button>
     </div>

@@ -15,41 +15,34 @@ export default function App() {
   const [contacts, setContacts] = useState(
     JSON.parse(localStorage.getItem("contacts")) || baseContacts
   );
+  const [filter, setFilter] = useState("");
 
   useEffect(() => {
     localStorage.setItem("contacts", JSON.stringify(contacts));
   }, [contacts]);
 
+  const filteredContacts =
+    contacts?.filter(
+      (contact) =>
+        contact.name &&
+        contact.name.toLowerCase().includes(filter.toLowerCase())
+    ) || [];
+
   function addContact(object) {
     object.id = nanoid();
-    baseContacts = [...contacts, object];
-
-    setContacts(baseContacts);
-  }
-
-  function onFilter(event) {
-    const value = event.target.value.toLowerCase();
-    if (value === "") {
-      setContacts(baseContacts);
-    } else {
-      const filteredContacts = contacts.filter((element) =>
-        element.name.toLowerCase().includes(value)
-      );
-      setContacts(filteredContacts);
-    }
+    setContacts([...contacts, object]);
   }
 
   function onDelete(id) {
-    const filteredArray = contacts.filter((contact) => contact.id !== id);
-    setContacts(filteredArray);
+    setContacts(contacts.filter((contact) => contact.id !== id));
   }
 
   return (
     <div>
       <h1>Phonebook</h1>
       <ContactForm onContact={addContact} />
-      <SearchBox onFilter={onFilter} />
-      <ContactList contact={contacts} onDelete={onDelete} />
+      <SearchBox value={filter} onChange={setFilter} />
+      <ContactList contacts={filteredContacts} onDelete={onDelete} />
     </div>
   );
 }
